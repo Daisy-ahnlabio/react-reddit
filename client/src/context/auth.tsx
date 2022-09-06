@@ -7,13 +7,14 @@ interface State {
   user: User | undefined;
   loading: boolean;
 }
-
+// 유저 정보 유저의 인증유무
 const StateContext = createContext<State>({
   authenticated: false,
   user: undefined,
   loading: true,
 });
 
+//유저의 정보를 업데이트 하거나 인증 유무를 업데이트 하는 것을 구현
 const DispatchContext = createContext<any>(null);
 
 interface Action {
@@ -21,6 +22,7 @@ interface Action {
   payload: any;
 }
 
+// 복잡한 state 사용할때 씀
 const reducer = (state: State, { type, payload }: Action) => {
   switch (type) {
     case "LOGIN":
