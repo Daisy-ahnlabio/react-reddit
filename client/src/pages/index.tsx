@@ -8,7 +8,7 @@ import { Post, Sub } from "../../types";
 import axios from "axios";
 import { useAuthState } from "../context/auth";
 import useSWRInfinite from "swr/infinite";
-// import PostCard from "../components/PostCard";
+import PostCard from "../components/PostCard";
 import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
@@ -77,9 +77,9 @@ const Home: NextPage = () => {
         {isInitialLoading && (
           <p className="text-lg text-center">로딩중입니다...</p>
         )}
-        {/* {posts?.map((post) => (
+        {posts?.map((post) => (
           <PostCard key={post.identifier} post={post} mutate={mutate} />
-        ))} */}
+        ))}
       </div>
 
       {/* 사이드바 */}

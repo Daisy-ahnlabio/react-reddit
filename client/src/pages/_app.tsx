@@ -44,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       >
         <AuthProvider>
           {!authRoute && <NavBar />}
-          <Component {...pageProps} />;
+          <Component {...pageProps} />
         </AuthProvider>
       </SWRConfig>
     </>
