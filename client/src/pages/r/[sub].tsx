@@ -1,6 +1,5 @@
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, {
   ChangeEvent,
@@ -10,14 +9,21 @@ import React, {
   useState,
 } from "react";
 import useSWR from "swr";
-import PostCard from "../../components/PostCard";
-import SideBar from "../../components/SideBar";
 import { useAuthState } from "../../context/auth";
-import { Post } from "../../../types";
 
 const SubPage = () => {
   const [ownSub, setOwnSub] = useState(false);
   const { authenticated, user } = useAuthState();
+
+  const fetcher = async (url: string) => {
+    try {
+      const res = await axios.get(url);
+      return res.data;
+    } catch (error: any) {
+      throw error.response.data;
+    }
+  };
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const subName = router.query.sub;
@@ -25,12 +31,13 @@ const SubPage = () => {
     data: sub,
     error,
     mutate,
-  } = useSWR(subName ? `/subs/${subName}` : null);
+  } = useSWR(subName ? `/subs/${subName}` : null, fetcher);
   useEffect(() => {
     if (!sub || !user) return;
     setOwnSub(authenticated && user.username === sub.username);
   }, [sub]);
   console.log("sub", sub);
+
   const uploadImage = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null) return;
 
@@ -50,27 +57,16 @@ const SubPage = () => {
     }
   };
 
+  // 자신의 커뮤니티(sub) 일떄만 클릭이 가능하게
   const openFileInput = (type: string) => {
     const fileInput = fileInputRef.current;
     if (fileInput) {
+      // banner or img
       fileInput.name = type;
       fileInput.click();
     }
   };
 
-  let renderPosts;
-  if (!sub) {
-    renderPosts = <p className="text-lg text-center">로딩중...</p>;
-  } else if (sub.posts.length === 0) {
-    renderPosts = (
-      <p className="text-lg text-center">아직 작성된 포스트가 없습니다.</p>
-    );
-  } else {
-    renderPosts = sub.posts.map((post: Post) => (
-      <PostCard key={post.identifier} post={post} subMutate={mutate} />
-    ));
-  }
-  console.log("sub.imageUrl", sub?.imageUrl);
   return (
     <>
       {sub && (
@@ -129,10 +125,7 @@ const SubPage = () => {
             </div>
           </div>
           {/* 포스트와 사이드바 */}
-          <div className="flex max-w-5xl px-4 pt-5 mx-auto">
-            <div className="w-full md:mr-3 md:w-8/12">{renderPosts} </div>
-            <SideBar sub={sub} />
-          </div>
+          <div className="flex max-w-5xl px-4 pt-5 mx-auto"></div>
         </>
       )}
     </>

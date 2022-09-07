@@ -26,6 +26,9 @@ app.get("/", (_, res) => res.send("running"));
 app.use("/api/auth", authRoutes);
 app.use("/api/subs", subRoutes);
 
+// 브라우저에서 이미지 폴더 가능하게 설정
+app.use(express.static("public"));
+
 let port = 4000;
 app.listen(port, async () => {
   // ${process.env.APP_URL}
