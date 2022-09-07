@@ -78,6 +78,7 @@ const createSub = async (req: Request, res: Response, next) => {
 
 const topSubs = async (req: Request, res: Response) => {
   try {
+    //imageUrl 값이 현재 Urn 값으로 나오는 오류 수정
     const imageUrlExp = `COALESCE('${process.env.APP_URL}/images/' ||s."imageUrn",'https://www.gravatar.com/avatar?d=mp&f=y')`;
     const subs = await AppDataSource.createQueryBuilder()
       .select(

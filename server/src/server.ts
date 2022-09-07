@@ -3,6 +3,7 @@ import morgan from "morgan";
 import { AppDataSource } from "./data-source";
 import authRoutes from "./routes/auth";
 import subRoutes from "./routes/subs";
+import postRoutes from "./routes/posts";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.get("/", (_, res) => res.send("running"));
 app.use("/api/auth", authRoutes);
 app.use("/api/subs", subRoutes);
+app.use("/api/posts", postRoutes);
 
 // 브라우저에서 이미지 폴더 가능하게 설정
 app.use(express.static("public"));
