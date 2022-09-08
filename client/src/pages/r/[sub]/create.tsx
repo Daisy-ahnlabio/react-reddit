@@ -42,7 +42,7 @@ const PostCreate = () => {
               />
               <div
                 style={{ top: 10, right: 10 }}
-                className="absolute mb-2 text-sm text-gray-400 select-none"
+                className="absolute mb-2 text-sm text-gray-400 select-none absolute"
               >
                 {title.trim().length}/20
               </div>

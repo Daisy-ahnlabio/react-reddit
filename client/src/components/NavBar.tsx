@@ -25,12 +25,7 @@ const NavBar: React.FC = () => {
       <span className="text-2xl font-semibold text-gray-400">
         <Link href="/">
           <a>
-            <Image
-              src="/reddit-name-logo.png"
-              alt="logo"
-              width={80}
-              height={45}
-            ></Image>
+            <Image src="/vercel.svg" alt="logo" width={80} height={45}></Image>
           </a>
         </Link>
       </span>
